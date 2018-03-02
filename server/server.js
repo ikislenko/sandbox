@@ -1,21 +1,15 @@
-var WebSocketServer = require('ws').Server,
-    wss = new WebSocketServer({ port: 3000 })
+const WebSocketServer = require("ws").Server;
+const server = new WebSocketServer({ port: 3000 });
 
-wss.on('connection', function (ws) {
-    ws.on('message', function (message) {
+server.on('connection', function (conn) {
+    conn.on('message', function (message) {
         console.log('received: %s', message)
+        conn.send("Hello World!")
     })
-    setInterval(
-        () => ws.send(`${new Date()}`),
-        1000
-    )
 
+    conn.on("close", () => {
+        console.log("Connection closed!");
+    })
 
-    ws.onclose = function (event) {
-        console.log('onclose called');
-    };
-
-    ws.onerror = function (error) {
-        console.log('onerror called');
-    };
+    conn.on('error', event => console.log('errored', event));
 })

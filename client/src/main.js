@@ -1,9 +1,13 @@
 require("./styles/main.less");
 
-var a = 12;
-var square = (x) => x*x; 
-
-document.addEventListener("DOMContentLoaded", () => {
-	document.querySelector("#var").innerHTML = a;
-	document.querySelector("#result").innerHTML = square(a);
-});
+let ws = new WebSocket('ws://localhost:3000');
+// event emmited when connected
+ws.onopen = function () {
+	console.log('websocket is connected ...')
+	// sending a send event to websocket server
+	ws.send('connected')
+}
+// event emmited when receiving message 
+ws.onmessage = function (ev) {
+	console.log(ev);
+}

@@ -44,19 +44,21 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 	
 	__webpack_require__(1);
 	
-	var a = 12;
-	var square = function square(x) {
-		return x * x;
+	var ws = new WebSocket('ws://localhost:3000');
+	// event emmited when connected
+	ws.onopen = function () {
+		console.log('websocket is connected ...');
+		// sending a send event to websocket server
+		ws.send('connected');
 	};
-	
-	document.addEventListener("DOMContentLoaded", function () {
-		document.querySelector("#var").innerHTML = a;
-		document.querySelector("#result").innerHTML = square(a);
-	});
+	// event emmited when receiving message 
+	ws.onmessage = function (ev) {
+		console.log(ev);
+	};
 
 /***/ }),
 /* 1 */
